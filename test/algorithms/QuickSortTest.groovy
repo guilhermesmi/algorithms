@@ -25,8 +25,8 @@ class QuickSortTest {
 		assertEquals([1,2,3,4,5,6], sort.sort([6,5,4,3,2,1]))
 	}
 	
-	@Test
-	public void "should return max number of possible inversions of a big array"() {
+	@Test(timeout=2000L)
+	public void "should sort a 100,000 array fast"() {
 		File input = new File("resources/IntegerArray.txt")
 		List lines = input.readLines()
 		List<Integer> array = new ArrayList<Integer>(lines.size())
@@ -34,9 +34,6 @@ class QuickSortTest {
 			array.add(Integer.valueOf(it))
 		}
 		List<Integer> sorted = sort.sort(array)
-		sorted.each {
-			println(it)
-		}
 	}
 
 }
