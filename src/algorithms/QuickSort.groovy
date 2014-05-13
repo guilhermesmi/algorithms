@@ -1,6 +1,42 @@
 package algorithms
 
 class QuickSort {
+	
+	int comparisions = 0
+	
+	PivotStrategy strategy = new PivotStrategy()
+	
+	class PivotStrategy {
+		int firstElement(List<Integer> numbers, int start, int end){
+			return start
+		}
+		
+		int lastElement(List<Integer> numbers, int start, int end){
+			return end - 1
+		}
+		
+		int medianOfThree(List<Integer> numbers, int start, int end){
+			int first = numbers[start]
+			int last = numbers[end - 1]
+			int subArraySize = end - start
+			int mediumPos =  start - 1 + (subArraySize % 2 == 0 ? subArraySize / 2 : subArraySize / 2 + 1)
+			int medium = numbers[mediumPos]
+			 
+			int medianOfThreePos = 0
+			int medianOfThree = 0
+			if ((medium >= first && medium <= last) || (medium >= last && medium <= first)){
+				medianOfThreePos = mediumPos
+				medianOfThree = medium
+			} else if ((first >= medium && first <= last ) || (first >= last && first <= medium)){
+				medianOfThree = first
+				medianOfThreePos = start
+			} else {
+				medianOfThreePos = end - 1
+				medianOfThree = last
+			}
+			return medianOfThreePos
+		}
+	}
 
 	public List<Integer> sort(List<Integer> numbers){
 		assert (numbers != null || !numbers.isEmpty())
@@ -8,8 +44,8 @@ class QuickSort {
 		return numbers
 	}
 
-	protected int choosePivot(int start, int end){
-		return start
+	protected int choosePivot(List<Integer> numbers, int start, int end){
+		return strategy.lastElement(numbers, start, end)
 	}
 
 	protected int partition(List<Integer> numbers, int start, int end, int pivotPos){
@@ -35,8 +71,16 @@ class QuickSort {
 		if (numbers.size() == 1 || end - start <= 1){
 			return
 		} else {
-			int pivotPos = choosePivot(start, end)
+			int pivotPos = choosePivot(numbers, start, end)
+			// exchange pivots to get it on first position
+			if (pivotPos != start){
+				int tmp = numbers[pivotPos]
+				numbers[pivotPos] = numbers[start]
+				numbers[start] = tmp
+			}
+			pivotPos = start
 			pivotPos = partition(numbers, start, end, pivotPos)
+			comparisions += end - start - 1
 			sort(numbers, start, pivotPos)
 			sort(numbers, pivotPos + 1, end)
 		}

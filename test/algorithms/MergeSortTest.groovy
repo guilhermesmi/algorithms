@@ -36,9 +36,9 @@ class MergeSortTest {
 			array.add(Integer.valueOf(it))
 		}
 		List<Integer> sorted = sort.sort(array)
-		sorted.each {
-			println(it)
-		}
+//		sorted.each {
+//			println(it)
+//		}
 		println ("Inversions on array of size $array.size: $sort.inversions")
 	}
 
