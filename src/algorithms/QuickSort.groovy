@@ -7,15 +7,15 @@ class QuickSort {
 	PivotStrategy strategy = new PivotStrategy()
 	
 	class PivotStrategy {
-		int firstElement(List<Integer> numbers, int start, int end){
-			return start
-		}
 		
-		int lastElement(List<Integer> numbers, int start, int end){
-			return end - 1
-		}
 		
-		int medianOfThree(List<Integer> numbers, int start, int end){
+		def first = { List<Integer> numbers, int start, int end -> return start }
+		
+		def last = { List<Integer> numbers, int start, int end -> return end - 1}
+		
+		def medianOfThree = { 
+			List<Integer> numbers, int start, int end ->
+			
 			int first = numbers[start]
 			int last = numbers[end - 1]
 			int subArraySize = end - start
@@ -37,15 +37,16 @@ class QuickSort {
 			return medianOfThreePos
 		}
 	}
-
+	
 	public List<Integer> sort(List<Integer> numbers){
-		assert (numbers != null || !numbers.isEmpty())
-		sort(numbers, 0, numbers.size())
+		sort(numbers, strategy.first)
 		return numbers
 	}
 
-	protected int choosePivot(List<Integer> numbers, int start, int end){
-		return strategy.lastElement(numbers, start, end)
+	public List<Integer> sort(List<Integer> numbers, Closure choosePivot){
+		assert (numbers != null || !numbers.isEmpty())
+		sort(numbers, 0, numbers.size(), choosePivot)
+		return numbers
 	}
 
 	protected int partition(List<Integer> numbers, int start, int end, int pivotPos){
@@ -66,7 +67,7 @@ class QuickSort {
 		return i - 1
 	}
 
-	protected void sort(List<Integer> numbers, int start, int end){
+	protected void sort(List<Integer> numbers, int start, int end, Closure choosePivot){
 		assert (end >= start && start >= 0 && end <= numbers.size())
 		if (numbers.size() == 1 || end - start <= 1){
 			return
@@ -81,8 +82,8 @@ class QuickSort {
 			pivotPos = start
 			pivotPos = partition(numbers, start, end, pivotPos)
 			comparisions += end - start - 1
-			sort(numbers, start, pivotPos)
-			sort(numbers, pivotPos + 1, end)
+			sort(numbers, start, pivotPos, choosePivot)
+			sort(numbers, pivotPos + 1, end, choosePivot)
 		}
 	}
 }

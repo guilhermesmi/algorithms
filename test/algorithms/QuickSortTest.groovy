@@ -29,19 +29,35 @@ class QuickSortTest {
 		println ("$sort.comparisions comparisions needed to sort: $array")
 	}
 	
-	@Test(timeout=4000L)
-	public void "should sort a 100,000 array fast"() {
-		File input = new File("resources/QuickSort.txt")
+	List<Integer> readFile(String filename){
+		File input = new File(filename)
 		List lines = input.readLines()
 		List<Integer> array = new ArrayList<Integer>(lines.size())
 		lines.each {
 			array.add(Integer.valueOf(it))
 		}
-		List<Integer> sorted = sort.sort(array)
-		sorted.each {
-			println(it)
-		}
-		println ("$sort.comparisions comparisions needed to sort: $array.size")
+		array
+	}
+	
+	@Test(timeout=4000L)
+	public void "should sort a 100,000 array using first element pivot"() {
+		List<Integer> array = readFile("resources/QuickSort.txt")
+		List<Integer> sorted = sort.sort(array, sort.strategy.first)
+		println ("Pivot first: $sort.comparisions comparisions needed to sort: $array.size")
+	}
+	
+	@Test(timeout=4000L)
+	public void "should sort a 100,000 array using last element pivot"() {
+		List<Integer> array = readFile("resources/QuickSort.txt")
+		List<Integer> sorted = sort.sort(array, sort.strategy.last)
+		println ("Pivot last: $sort.comparisions comparisions needed to sort: $array.size")
+	}
+	
+	@Test(timeout=4000L)
+	public void "should sort a 100,000 array using medium of three elements pivot"() {
+		List<Integer> array = readFile("resources/QuickSort.txt")
+		List<Integer> sorted = sort.sort(array, sort.strategy.medianOfThree)
+		println ("Pivot medium of three: $sort.comparisions comparisions needed to sort: $array.size")
 	}
 
 }
