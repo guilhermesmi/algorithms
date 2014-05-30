@@ -11,7 +11,16 @@ class QuickSort {
 		
 		def first = { List<Integer> numbers, int start, int end -> return start }
 		
-		def last = { List<Integer> numbers, int start, int end -> return end - 1}
+		def last = { List<Integer> numbers, int start, int end ->
+			int pivotPos = end - 1
+			// exchange pivots to get it on first position
+			if (pivotPos != start){
+				int tmp = numbers[pivotPos]
+				numbers[pivotPos] = numbers[start]
+				numbers[start] = tmp
+			}
+			return start
+		}
 		
 		def medianOfThree = { 
 			List<Integer> numbers, int start, int end ->
@@ -34,7 +43,13 @@ class QuickSort {
 				medianOfThreePos = end - 1
 				medianOfThree = last
 			}
-			return medianOfThreePos
+			// exchange pivots to get it on first position
+			if (medianOfThreePos != start){
+				int tmp = numbers[medianOfThreePos]
+				numbers[medianOfThreePos] = numbers[start]
+				numbers[start] = tmp
+			}
+			return start
 		}
 	}
 	
@@ -49,8 +64,8 @@ class QuickSort {
 		return numbers
 	}
 
-	protected int partition(List<Integer> numbers, int start, int end, int pivotPos){
-		int pivot = numbers[pivotPos]
+	protected int partition(List<Integer> numbers, int start, int end){
+		int pivot = numbers[start]
 		int i = start + 1
 		for (int j = start + 1; j < end; j++){
 			//swap
@@ -63,7 +78,7 @@ class QuickSort {
 		}
 		int temp = numbers[i - 1]
 		numbers[i - 1] = pivot
-		numbers[pivotPos] = temp
+		numbers[start] = temp
 		return i - 1
 	}
 
@@ -73,14 +88,7 @@ class QuickSort {
 			return
 		} else {
 			int pivotPos = choosePivot(numbers, start, end)
-			// exchange pivots to get it on first position
-			if (pivotPos != start){
-				int tmp = numbers[pivotPos]
-				numbers[pivotPos] = numbers[start]
-				numbers[start] = tmp
-			}
-			pivotPos = start
-			pivotPos = partition(numbers, start, end, pivotPos)
+			pivotPos = partition(numbers, start, end)
 			comparisions += end - start - 1
 			sort(numbers, start, pivotPos, choosePivot)
 			sort(numbers, pivotPos + 1, end, choosePivot)
