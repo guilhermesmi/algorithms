@@ -4,29 +4,39 @@ class Vertex {
 	
 	String id
 	
-	boolean contracted
-	
-	Map<Vertex,List<Edge>> edges
+	List<Edge> edges
 	
 	public Vertex (String id){
 		this.id = id
-		edges = new HashMap<>()
+		edges = new ArrayList<>()
 	}
 	
-	void addEdge(Vertex to){
-		List<Edge> connections
-		if (edges[to] == null){
-			connections = new ArrayList<Vertex>()
-			edges[to] = connections
-		} else {
-			connections = edges[to]
+	int totalEdges (){
+		edges.size()
+	}
+	
+	void addEdge(Edge uv){
+		if (!edges.contains(uv)){
+			edges.add(uv)
 		}
-		connections.add(new Edge(u: this, v: to))
 	}
 	
-	boolean isConnectedTo(Vertex b){
-		List<Edge> connections = edges[b]
-		return connections != null && !connections.isEmpty()
+	void removeEdge(Edge e){
+		boolean removed = edges.remove(e)
+		if (!removed){
+			throw new IllegalArgumentException("Edge $e can't be removed from vertex $this, since can't be found.")
+		}
+	}
+	
+	List<Edge> removeSelfLoops(){
+		List<Edge> selfLoops = new LinkedList()
+		edges.each {
+			if (this.equals(it.u) && this.equals(it.v)){
+				selfLoops.add(it)
+			}
+		}
+		this.edges.removeAll(selfLoops)
+		return selfLoops
 	}
 	
 	@Override

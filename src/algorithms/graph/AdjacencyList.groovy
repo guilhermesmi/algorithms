@@ -1,11 +1,15 @@
 package algorithms.graph
 
 
+
+
 class AdjacencyList {
 
 	List<Vertex> vertices
 
 	List<Edge> edges
+	
+	List<Edge> uncontractedEdges
 	
 	Vertex findVertex(String id){
 		int index = vertices.indexOf(new Vertex(id))
@@ -15,15 +19,10 @@ class AdjacencyList {
 		null
 	}
 	
-	Edge fingEdge (String u, String v){
-		Edge uv = null
-		edges.each {
-			Edge e ->
-			if ((e.u.id.equals(u) && e.v.id.equals(v)) || (e.u.id.equals(v) && e.v.id.equals(u))){
-				uv = e
-			}
+	Edge fingEdge (String uid, String vid){
+		this.edges.find {
+			return (it.u.id.equals(uid) && it.v.id.equals(vid)) || (it.u.id.equals(vid) && it.v.id.equals(uid))
 		}
-		return uv
 	}
 	
 	Vertex contract(Edge edge){
@@ -32,20 +31,31 @@ class AdjacencyList {
 		this.vertices.remove(u)
 		this.vertices.remove(v)
 		this.edges.remove(edge)
+		u.edges.remove(edge)
+		v.edges.remove(edge)
 		
-		Vertex uv = new Vertex(u.id + "-" + v.id)
-		uv.contracted = true
+		Vertex uv = new ContractedVertex(u,v)
 
 		u.edges.each {
-			def e ->
-			e.value.each {
-				boolean replaced = it.replace(u, uv)
-			}
+			Edge e ->
+			boolean replaced = e.contract(u, uv)
+//			if (e.u instanceof ContractedVertex && e.v instanceof ContractedVertex){
+//				this.uncontractedEdges.remove(e)
+//			}
 		}
 		v.edges.each {
-			def e ->
-			e.value.each {
-				boolean replaced = it.replace(v, uv)
+			Edge e ->
+			boolean replaced = e.contract(v, uv)
+//			if (e.u instanceof ContractedVertex && e.v instanceof ContractedVertex){
+//				this.uncontractedEdges.remove(e)
+//			}
+
+		}
+		List<Edge> selfLoopsRemoved = uv.removeSelfLoops()
+		if (selfLoopsRemoved != null && !selfLoopsRemoved.isEmpty()){
+			selfLoopsRemoved.each {
+				this.edges.remove(it)
+				this.uncontractedEdges.remove(it)
 			}
 		}
 		this.vertices.add(uv)
@@ -53,10 +63,13 @@ class AdjacencyList {
 	}
 	
 	void addEdge (Vertex u, Vertex v){
-		Edge uv = new Edge(u: u, v: v)
-		u.addEdge(v)
-		v.addEdge(u)
-		edges.add(uv)
+		Edge uv = fingEdge(u.id, v.id)
+		if (uv == null){
+			uv = new Edge(u: u, v: v)
+			edges.add(uv)
+		}
+		u.addEdge(uv)
+		v.addEdge(uv)
 	}
 	
 	Vertex addVertex(String id){
@@ -68,13 +81,25 @@ class AdjacencyList {
 		return v
 	}
 	
-	void kargerContraction () {
+	int kargerMinCut() {
 		
+		Random random = new Random()
+		// randomsly select an edge that hasn't been contracted
+		while(this.vertices.size() > 2){
+			// random seed
+			int edgeIndex = random.nextInt(this.uncontractedEdges.size())
+			Edge edge = this.uncontractedEdges.get(edgeIndex)
+			this.uncontractedEdges.remove(edgeIndex)
+			// contract itcontract
+			Vertex contracted = contract(edge)
+		}
+		// min cut
+		return this.edges.size()
 	}
 
 	void readFromFile(String fileName){
-		vertices = new LinkedList<Vertex>()
-		edges = new LinkedList<Edge>()
+		vertices = new ArrayList<Vertex>()
+		edges = new ArrayList<Edge>()
 
 		File file = new File(fileName).eachLine { String line, int number ->
 			String[] columns = line.split("\t")
@@ -89,6 +114,17 @@ class AdjacencyList {
 				}
 			} else {
 				println ("Line #$number is empty. Contents: $line")
+			}
+		}
+		// keep this list to be used in the flip coins karger min cut
+		uncontractedEdges = new ArrayList(this.edges)
+	}
+	
+	void writeToFile(){
+		new File('resources/output.txt').withWriter{
+			edges.each {
+				Edge e ->
+				it << e.u.id + "," + e.v.id + "\n"
 			}
 		}
 	}
