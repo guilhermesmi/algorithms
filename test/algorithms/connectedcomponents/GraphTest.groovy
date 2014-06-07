@@ -42,7 +42,7 @@ public class GraphTest {
 
 		
 	@Test
-	public void "should read big file containing directed graph"(){
+	public void "should calculate the strongest connected components of a big directed graph"(){
 		String filename = "resources/SCC.txt"
 		println ("Reading file.")
 		graph.readFromFile(filename)

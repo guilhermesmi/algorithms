@@ -1,4 +1,4 @@
-package algorithms.graph
+package algorithms.mincut
 
 import static org.junit.Assert.*
 

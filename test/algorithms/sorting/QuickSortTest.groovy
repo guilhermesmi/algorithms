@@ -1,9 +1,11 @@
-package algorithms
+package algorithms.sorting
 
 import static org.junit.Assert.*
 
 import org.junit.Before
 import org.junit.Test
+
+import algorithms.sorting.QuickSort;
 
 class QuickSortTest {
 

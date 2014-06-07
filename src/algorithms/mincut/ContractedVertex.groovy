@@ -1,4 +1,4 @@
-package algorithms.graph
+package algorithms.mincut
 
 class ContractedVertex extends Vertex {
 	
