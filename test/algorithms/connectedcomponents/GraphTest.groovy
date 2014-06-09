@@ -7,6 +7,8 @@ import java.util.Map.Entry
 import org.junit.Before
 import org.junit.Test
 
+import algorithms.mincut.Vertex
+
 public class GraphTest {
 	
 	Graph graph
@@ -44,25 +46,23 @@ public class GraphTest {
 	@Test
 	public void "should calculate the strongest connected components of a big directed graph"(){
 		String filename = "resources/SCC.txt"
-		println ("Reading file.")
+		println ("Reading file $filename...")
 		graph.readFromFile(filename)
 		assertEquals(875714,graph.vertices.size())
 		int totalEdges =graph.totalEdges()
 		assertEquals(5105043,totalEdges)
 		assertEquals(totalEdges,graph.totalReverseEdges())
-		println ("Calculating SCCs.")
+		println ("Graph has $graph.vertices.size vertices and $totalEdges edges. Calculating SCCs...")
 		Map<Vertex,Set<Vertex>> sccs = graph.kosaraju()
 		TreeSet<Integer> sortedSccs = new TreeSet<>()  
 		sccs.each {
 			Entry<Vertex,Set<Vertex>> scc ->
 			sortedSccs.add(scc.value.size())
 		}
-		
+		println ("The SCCs sizes are...")
 		for (Integer i: sortedSccs.descendingSet()){
-			println (i)
+			print ("$i,")
 		}
-		
-		
 	}
 	
 }
