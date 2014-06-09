@@ -7,8 +7,6 @@ import java.util.Map.Entry
 import org.junit.Before
 import org.junit.Test
 
-import algorithms.mincut.Vertex
-
 public class GraphTest {
 	
 	Graph graph
@@ -64,5 +62,26 @@ public class GraphTest {
 			print ("$i,")
 		}
 	}
+	
+	@Test
+	public void "should calculate the shortest path from vertex 1 to some vetices"(){
+		String filename = "resources/dijkstraData.txt"
+		println ("Reading file $filename...")
+		graph.readWeightedGraph(filename)
+		assertEquals(200,graph.vertices.size())
+		int totalEdges =graph.totalEdges()
+		println ("Graph has $graph.vertices.size vertices and $totalEdges edges. Calculating shortest path...")
+		Vertex source = graph.vertexRead[1]
+		List<Integer> dests = [7,37,59,82,99,115,133,165,188,197]
+		println ("Calculating the shortest path from $source.id to $dests...")
+		Map<Vertex,Integer> dists = graph.dijkstra(source)
+		println ("Shortest path from $source.id to $dests: ...")
+		dests.each {
+			print(dists[graph.vertexRead[it]])
+			print(",")
+		}
+		
+	}
+	
 	
 }
