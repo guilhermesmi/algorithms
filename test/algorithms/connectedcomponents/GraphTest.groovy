@@ -29,8 +29,8 @@ public class GraphTest {
 	public void "should read scc-forum-test-case-1 containing directed graph"(){
 		String filename = "resources/scc-forum-test-case-1.txt"
 		graph.readFromFile(filename)
-//		assertEquals(8,graph.vertices.size())
-//		assertEquals(9,graph.totalEdges())
+		assertEquals(12,graph.vertices.size())
+		assertEquals(20,graph.totalEdges())
 		assertEquals(graph.totalEdges(),graph.totalReverseEdges())
 		Map<Vertex,Set<Vertex>> sccs = graph.kosaraju()
 		sccs.each {
@@ -50,8 +50,9 @@ public class GraphTest {
 		int totalEdges =graph.totalEdges()
 		assertEquals(5105043,totalEdges)
 		assertEquals(totalEdges,graph.totalReverseEdges())
-		println ("Calculating SCCs.")
+		println ("Calculating SCCs...")
 		Map<Vertex,Set<Vertex>> sccs = graph.kosaraju()
+		println ("Found SCCs...")
 		TreeSet<Integer> sortedSccs = new TreeSet<>()  
 		sccs.each {
 			Entry<Vertex,Set<Vertex>> scc ->
@@ -59,7 +60,7 @@ public class GraphTest {
 		}
 		
 		for (Integer i: sortedSccs.descendingSet()){
-			println (i)
+			print ("$i,")
 		}
 		
 		
