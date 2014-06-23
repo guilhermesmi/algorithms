@@ -13,8 +13,8 @@ class HeapTest {
 
 	@Before
 	public void setup (){
-		minHeap = new Heap(100, true)
-		maxHeap = new Heap(100, false)
+		minHeap = new Heap(100000, true)
+		maxHeap = new Heap(100000, false)
 	}
 
 	@Test
@@ -24,7 +24,7 @@ class HeapTest {
 			Integer it ->
 			minHeap.add(it)
 		}
-		int[] sorted = minHeap.sort()
+		List sorted = minHeap.sort()
 		[7,19,24,25,29,31,40,56,58,68].eachWithIndex {it,index ->
 			assertEquals(it, sorted[index])
 		}
@@ -37,10 +37,21 @@ class HeapTest {
 			Integer it ->
 			minHeap.add(it)
 		}
-		int[] sorted = minHeap.sort()
+		List sorted = minHeap.sort()
 		[0,1,2,3,4,5].eachWithIndex {it,index ->
 			assertEquals(it, sorted[index])
 		}
+	}
+	
+	@Test
+	public void "should sort numbers in natural order 1"(){
+		Integer[] numbers = 1000..1
+		numbers.each {
+			Integer it ->
+			minHeap.add(it)
+		}
+		List sorted = minHeap.sort()
+		assertEquals(1..1000,sorted)
 	}
 	
 	@Test
@@ -50,7 +61,7 @@ class HeapTest {
 			Integer it ->
 			maxHeap.add(it)
 		}
-		int[] sorted = maxHeap.sort()
+		List sorted = maxHeap.sort()
 		[5,4,3,2,1,0].eachWithIndex {it,index ->
 			assertEquals(it, sorted[index])
 		}
@@ -63,7 +74,7 @@ class HeapTest {
 			Integer it ->
 			minHeap.add(it)
 		}
-		int[] sorted = minHeap.sort()
+		List sorted = minHeap.sort()
 		[0,1,2,3,4,5,6,7,8,9,10].eachWithIndex {it,index ->
 			assertEquals(it, sorted[index])
 		}
@@ -76,7 +87,7 @@ class HeapTest {
 			Integer it ->
 			minHeap.add(it)
 		}
-		int[] sorted = minHeap.sort()
+		List sorted = minHeap.sort()
 		[0,1,2,3,4,5,6,7,8,9,10].eachWithIndex {it,index ->
 			assertEquals(it, sorted[index])
 		}
@@ -89,7 +100,7 @@ class HeapTest {
 			Integer it ->
 			minHeap.add(it)
 		}
-		int[] sorted = minHeap.sort()
+		List sorted = minHeap.sort()
 		[0,1,2,3,4,5,6,7,8,9,10].eachWithIndex {it,index ->
 			assertEquals(it, sorted[index])
 		}

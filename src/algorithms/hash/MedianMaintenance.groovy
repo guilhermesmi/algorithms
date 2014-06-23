@@ -4,9 +4,9 @@ class MedianMaintenance {
 
 	Comparator<Integer> inverseComparator = new ClosureComparator<Integer>({a,b -> b.compareTo(a)})
 
-//	Heap min = new Heap(10000, true)
+	Heap min = new Heap(10000, true)
 	Heap max = new Heap(10000, false)
-	PriorityQueue<Integer> min = new PriorityQueue<Integer>(10000)
+//	PriorityQueue<Integer> min = new PriorityQueue<Integer>(10000)
 //	PriorityQueue<Integer> max = new PriorityQueue<Integer>(10000,inverseComparator)
 	
 

@@ -1,7 +1,14 @@
 package algorithms.hash
 
-import javax.sql.PooledConnection;
-
+/**
+ * Heap class that supports Integer values. 
+ * It guarantees that the root if the heap will be either the smallest or the biggest element, depending if parameter asc is true or false.
+ * Min / Max operations take O(1), insert / remove takes O(log n) time. Typical HeapSort implementation takes O(n log n) running time.
+ * Typically it needs  O(n) space, using ArrayList to store elements on it.
+ * 
+ * Note that it's designed for learning purposes, so it could be improved to take generics.
+ * @author epirgui
+ */
 class Heap {
 
 	List<Integer> values
@@ -12,19 +19,24 @@ class Heap {
 		this.asc = asc
 	}
 	
-	int parent(int i){
-		return i / 2
+	public Heap(){
+		this.values = new ArrayList<Integer>()
+		this.asc = true
+	}
+	
+	private int parent(int i){
+		return (i + 1 / 2) - 1
 	}
 	
 	boolean isEmpty(){
-		return size() == 0
+		return values.isEmpty()
 	}
 	
 	int size(){
 		return values.size()
 	}
 	
-	void swap(int i, int j){
+	private void swap(int i, int j){
 		if (i >= size() || i < 0){
 			throw new IllegalArgumentException("Invalid position $i. current size is: $size()")
 		}
@@ -36,11 +48,11 @@ class Heap {
 		values[j] = temp
 	}
 	
-	Integer[] children(int i){
+	private Integer[] children(int i){
 		return [values[i+1],values[i+2]]
 	}
 	
-	int smallerChild (int i){
+	private int smallerChild (int i){
 		int child1Pos = i + 1
 		int child2Pos = i + 2
 		Integer child1 = values[child1Pos]
@@ -60,7 +72,7 @@ class Heap {
 		}
 	}
 	
-	int biggerChild (int i){
+	private int biggerChild (int i){
 		int child1Pos = i + 1
 		int child2Pos = i + 2
 		Integer child1 = values[child1Pos]
@@ -80,6 +92,11 @@ class Heap {
 		}
 	}
 
+	/**
+	 * Adds element to the heap, and guarantees that the element is the smallest / largest depending how the heap param asc was defined on heap construction.
+	 * @param value to be added to the Heap. It takes O (log n) time.
+	 * @return its position
+	 */
 	int add(Integer value){
 		values.add(value)
 		int i = size() - 1;
@@ -127,6 +144,9 @@ class Heap {
 		isSmaller
 	}
 	
+	/**
+	 * @return Just return the topmost element of the heap. It takes O(1) time.
+	 */
 	Integer peek(){
 		return values[0]
 	}
@@ -136,6 +156,10 @@ class Heap {
 		return values.toString()
 	}
 	
+	/**
+	 * @return Return and remove the top element of the Heap. Heap property (any element must be smaller/bigger than its children) needs to be restored also.
+	 * It takes O(log n) time.
+	 */
 	Integer poll(){
 		Integer root = values[0]
 		int lastLeaf = size() - 1;
@@ -159,6 +183,10 @@ class Heap {
 		return root
 	}
 
+	/**
+	 * HeapSort implementation
+	 * @return sorted list of elements (ascending if it's a min heap or descending if it's a max heap)
+	 */
 	List<Integer> sort(){
 		List<Integer> sorted = new ArrayList<Integer>(values.size())
 		while(!this.isEmpty()){
