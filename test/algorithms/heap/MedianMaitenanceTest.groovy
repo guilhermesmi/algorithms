@@ -1,9 +1,11 @@
-package algorithms.hash
+package algorithms.heap
 
 import static org.junit.Assert.*
 
 import org.junit.Before
 import org.junit.Test
+
+import algorithms.heap.MedianMaintenance;
 
 
 class MedianMaitenanceTest {

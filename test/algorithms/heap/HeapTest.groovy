@@ -1,9 +1,12 @@
-package algorithms.hash
+package algorithms.heap
 
 import static org.junit.Assert.*
 import static org.junit.matchers.JUnitMatchers.*
+
 import org.junit.Before
 import org.junit.Test
+
+import algorithms.heap.Heap;
 
 
 class HeapTest {

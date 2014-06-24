@@ -1,4 +1,4 @@
-package algorithms.hash
+package algorithms.heap
 
 /**
  * Heap class that supports Integer values. 
