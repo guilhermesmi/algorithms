@@ -13,48 +13,61 @@ class Heap {
 
 	List<Integer> values
 	boolean asc
-	
+
 	public Heap(int size, boolean asc){
 		this.values = new ArrayList<Integer>(size)
 		this.asc = asc
 	}
-	
+
 	public Heap(){
 		this.values = new ArrayList<Integer>()
 		this.asc = true
 	}
-	
-	private int parent(int i){
-		return (i + 1 / 2) - 1
+
+	private int childrenPos(int i){
+		return 2 * i + 1
 	}
-	
+
+	private int parent(int i){
+		if (i == 0){
+			return 0
+		} else {
+			return (i - 1) >>> 1;
+		}
+	}
+
 	boolean isEmpty(){
 		return values.isEmpty()
 	}
-	
+
 	int size(){
 		return values.size()
 	}
-	
+
 	private void swap(int i, int j){
-		if (i >= size() || i < 0){
-			throw new IllegalArgumentException("Invalid position $i. current size is: $size()")
+		int size = this.size()
+		if (i >= size || i < 0){
+			throw new IllegalArgumentException("Invalid position $i. current size is: $size")
 		}
-		if (j >= size() || j < 0){
-			throw new IllegalArgumentException("Invalid position $j. current size is: $size()")
+		if (j >= size || j < 0){
+			throw new IllegalArgumentException("Invalid position $j. current size is: $size")
 		}
-		Integer temp = values[i]
+		int temp = values[i]
 		values[i] = values[j]
 		values[j] = temp
 	}
-	
+
 	private Integer[] children(int i){
-		return [values[i+1],values[i+2]]
+		int childrenStart = childrenPos(i)
+		return [
+			values[childrenStart],
+			values[childrenStart+1]
+		]
 	}
-	
+
 	private int smallerChild (int i){
-		int child1Pos = i + 1
-		int child2Pos = i + 2
+		int child1Pos = childrenPos(i)
+		int child2Pos = child1Pos + 1
 		Integer child1 = values[child1Pos]
 		Integer child2 = values[child2Pos]
 		if (child1 != null){
@@ -71,10 +84,10 @@ class Heap {
 			return child2Pos
 		}
 	}
-	
+
 	private int biggerChild (int i){
-		int child1Pos = i + 1
-		int child2Pos = i + 2
+		int child1Pos = childrenPos(i)
+		int child2Pos = child1Pos + 1
 		Integer child1 = values[child1Pos]
 		Integer child2 = values[child2Pos]
 		if (child1 != null){
@@ -97,11 +110,13 @@ class Heap {
 	 * @param value to be added to the Heap. It takes O (log n) time.
 	 * @return its position
 	 */
-	int add(Integer value){
+	int add(int value){
 		values.add(value)
+
+		// move up
 		int i = size() - 1;
-		Integer currValue = value
-		Integer parentValue = values[parent(i)]
+		int currValue = value
+		int parentValue = values[parent(i)]
 		if (asc){
 			while (currValue < parentValue){
 				swap(i,parent(i))
@@ -119,21 +134,21 @@ class Heap {
 		}
 		return i
 	}
-	
+
 	boolean isBiggerThanAnyChild(int i){
-		Integer value = values[i]
+		int value = values[i]
 		Integer[] child = children(i)
 		boolean isBigger = false;
 		if (child[0] != null && value > child[0]){
 			isBigger = true
 		} else if (child[1] != null && value > child[1]){
-			isBigger = true	
-		} 
+			isBigger = true
+		}
 		isBigger
 	}
-	
+
 	boolean isSmallerThanAnyChild(int i){
-		Integer value = values[i]
+		int value = values[i]
 		Integer[] child = children(i)
 		boolean isSmaller = false;
 		if (child[0] != null && value < child[0]){
@@ -143,41 +158,43 @@ class Heap {
 		}
 		isSmaller
 	}
-	
+
 	/**
 	 * @return Just return the topmost element of the heap. It takes O(1) time.
 	 */
-	Integer peek(){
+	int peek(){
 		return values[0]
 	}
-	
+
 	@Override
 	public String toString() {
 		return values.toString()
 	}
-	
+
 	/**
 	 * @return Return and remove the top element of the Heap. Heap property (any element must be smaller/bigger than its children) needs to be restored also.
 	 * It takes O(log n) time.
 	 */
-	Integer poll(){
-		Integer root = values[0]
+	int poll(){
+		int root = values[0]
 		int lastLeaf = size() - 1;
 		swap(0,lastLeaf)
 		values.remove(lastLeaf)
-		int vPos = 0
-		// min heap or max heap?
-		if (asc){
-			while (isBiggerThanAnyChild(vPos)){
-				int smallerPos = smallerChild(vPos);
-				swap(vPos,smallerPos)
-				vPos = smallerPos
-			}
-		} else {
-			while (isSmallerThanAnyChild(vPos)){
-				int biggerPos = biggerChild(vPos);
-				swap(vPos,biggerPos)
-				vPos = biggerPos
+		if (!values.isEmpty()){
+			int vPos = 0
+			// min heap or max heap?
+			if (asc){
+				while (isBiggerThanAnyChild(vPos)){
+					int smallerPos = smallerChild(vPos);
+					swap(vPos,smallerPos)
+					vPos = smallerPos
+				}
+			} else {
+				while (isSmallerThanAnyChild(vPos)){
+					int biggerPos = biggerChild(vPos);
+					swap(vPos,biggerPos)
+					vPos = biggerPos
+				}
 			}
 		}
 		return root
