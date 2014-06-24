@@ -28,6 +28,10 @@ class LinkedListTest {
 		assertEquals(3,list.size)
 		list.remove(2)
 		assertEquals(2,list.size)
+		list.remove(10)
+		assertEquals(1,list.size)
+		list.remove(1)
+		assertEquals(0,list.size)
 	}
 	
 	@Test
