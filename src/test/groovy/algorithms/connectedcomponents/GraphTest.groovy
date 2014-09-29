@@ -7,17 +7,18 @@ import java.util.Map.Entry
 import org.junit.Before
 import org.junit.Test
 
-public class GraphTest {
+import spock.lang.Ignore;
+import spock.lang.Specification;
+
+public class GraphTest extends Specification {
 	
 	Graph graph
 	
-	@Before
-	public void setup (){
+	def setup (){
 		graph = new Graph()
 	}
 
-	@Test
-	public void "should read scc-test-case-1 containing directed graph"(){
+	def "should read scc-test-case-1 containing directed graph"(){
 		String filename = "src/test/resources/scc-test-case-1.txt"
 		graph.readFromFile(filename)
 		assertEquals(9,graph.vertices.size())
@@ -25,8 +26,7 @@ public class GraphTest {
 		assertEquals(graph.totalEdges(),graph.totalReverseEdges())
 	}
 	
-	@Test
-	public void "should read scc-forum-test-case-1 containing directed graph"(){
+	def "should read scc-forum-test-case-1 containing directed graph"(){
 		String filename = "src/test/resources/scc-forum-test-case-1.txt"
 		graph.readFromFile(filename)
 //		assertEquals(8,graph.vertices.size())
@@ -40,9 +40,8 @@ public class GraphTest {
 		}
 	}
 
-		
-	@Test
-	public void "should calculate the strongest connected components of a big directed graph"(){
+	@Ignore // takes too much take, and need to increase JVM stack size -Xss100m
+	def "should calculate the strongest connected components of a big directed graph"(){
 		String filename = "src/test/resources/SCC.txt"
 		println ("Reading file $filename...")
 		graph.readFromFile(filename)
@@ -63,8 +62,7 @@ public class GraphTest {
 		}
 	}
 	
-	@Test
-	public void "should calculate the shortest path from vertex 1 to some vetices"(){
+	def "should calculate the shortest path from vertex 1 to some vetices"(){
 		String filename = "src/test/resources/dijkstraData.txt"
 		println ("Reading file $filename...")
 		graph.readWeightedGraph(filename)
@@ -82,6 +80,4 @@ public class GraphTest {
 		}
 		
 	}
-	
-	
 }
