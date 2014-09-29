@@ -1,6 +1,7 @@
 .classpath
 .project
 .gradle
+.groovy
 .settings/
 /bin
 /target
