@@ -7,10 +7,10 @@ import org.junit.Test
 
 import spock.lang.Ignore;
 import spock.lang.Specification;
+import spock.lang.Unroll;
 
 
 class TwoSumSpecification extends Specification {
-
 
 	TwoSum twoSum
 
@@ -18,18 +18,16 @@ class TwoSumSpecification extends Specification {
 		twoSum = new TwoSum()
 	}
 
-	def "should calculate the distinct sum of 2 integers"(){
-		String filename = "src/test/resources/algo1-programming_prob-2sum-test-case-1.txt"
-		twoSum.readFromFile(filename)
-		int distincts = twoSum.distinctSums(-10000, 10000)
-		println("Distincts: $distincts")
-	}
-	
-	@Ignore // need to run manually since it takes too long
-	def "should calculate the distinct sum of 2 integers for big file"(){
-		String filename = "src/test/resources/algo1-programming_prob-2sum.txt"
-		twoSum.readFromFile(filename)
-		int distincts = twoSum.distinctSums(-10000, 10000)
-		println("Distincts: $distincts")
+	@Unroll
+	def "should calculate the distinct sum of 2 integers for #filename"(){
+		given:
+			def filePrefix = "src/test/resources/"
+		expect:
+			twoSum.readFromFile(filePrefix + filename)
+			distincts == twoSum.distinctSums(-10000, 10000)
+		where:
+			filename 										| distincts
+			"algo1-programming_prob-2sum-test-case-1.txt"	| 5
+//			"algo1-programming_prob-2sum.txt"				| _
 	}
 }
