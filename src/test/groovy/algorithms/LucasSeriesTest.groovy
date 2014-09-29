@@ -1,27 +1,42 @@
 package algorithms;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.*
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.Before
+import org.junit.Test
 
-class LucasSeriesTest {
+import spock.lang.Specification
+import spock.lang.Unroll
 
-	LucasSeries lucas;
+class LucasSeriesTest extends Specification{
+
+	LucasSeries lucas = new LucasSeries();
 	
 	@Before
 	public void setup(){
 		lucas = new LucasSeries()
 	}
 	
-	@Test(expected=IllegalArgumentException.class)
-	public void "should throw an exception when n < 0"() {
-		lucas.l(-1)
+	def "should throw an exception when n < 0"() {
+		when:
+			lucas.l(-1)
+		then:
+			thrown(IllegalArgumentException)
 	}
 	
-	@Test
-	public void "l of 0 = 2"() {
-		assertEquals(2, lucas.l(0));
+	@Unroll
+	def "lucas of #number = #result"() {
+		expect:
+			lucas.l(number) == result
+		where:
+			number	|	result
+				0	|	2
+				1	|	1
+				2	|	3
+				3	|	4
+				4	|	7
+				100	|	1535881671
+				1000|	1080713615
 	}
 	
 	@Test

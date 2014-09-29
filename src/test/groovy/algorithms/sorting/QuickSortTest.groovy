@@ -43,21 +43,21 @@ class QuickSortTest {
 	
 	@Test(timeout=4000L)
 	public void "should sort a 100,000 array using first element pivot"() {
-		List<Integer> array = readFile("resources/QuickSort.txt")
+		List<Integer> array = readFile("src/test/resources/QuickSort.txt")
 		List<Integer> sorted = sort.sort(array, sort.strategy.first)
 		println ("Pivot first: $sort.comparisions comparisions needed to sort: $array.size")
 	}
 	
 	@Test(timeout=4000L)
 	public void "should sort a 100,000 array using last element pivot"() {
-		List<Integer> array = readFile("resources/QuickSort.txt")
+		List<Integer> array = readFile("src/test/resources/QuickSort.txt")
 		List<Integer> sorted = sort.sort(array, sort.strategy.last)
 		println ("Pivot last: $sort.comparisions comparisions needed to sort: $array.size")
 	}
 	
 	@Test(timeout=4000L)
 	public void "should sort a 100,000 array using medium of three elements pivot"() {
-		List<Integer> array = readFile("resources/QuickSort.txt")
+		List<Integer> array = readFile("src/test/resources/QuickSort.txt")
 		List<Integer> sorted = sort.sort(array, sort.strategy.medianOfThree)
 		println ("Pivot medium of three: $sort.comparisions comparisions needed to sort: $array.size")
 	}

@@ -31,7 +31,7 @@ class MergeSortTest {
 	
 	@Test
 	public void "should return max number of possible inversions of a big array"() {
-		File input = new File("resources/IntegerArray.txt")
+		File input = new File("src/test/resources/IntegerArray.txt")
 		List lines = input.readLines()
 		List<Integer> array = new ArrayList<Integer>(lines.size())
 		lines.each {

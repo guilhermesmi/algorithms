@@ -18,7 +18,7 @@ class TwoSumTest {
 
 	@Test
 	public void "should calculate the distinct sum of 2 integers"(){
-		String filename = "resources/algo1-programming_prob-2sum-test-case-1.txt"
+		String filename = "src/test/resources/algo1-programming_prob-2sum-test-case-1.txt"
 		twoSum.readFromFile(filename)
 		int distincts = twoSum.distinctSums(-10000, 10000)
 		println("Distincts: $distincts")
@@ -27,7 +27,7 @@ class TwoSumTest {
 	
 	@Test
 	public void "should calculate the distinct sum of 2 integers for big file"(){
-		String filename = "resources/algo1-programming_prob-2sum.txt"
+		String filename = "src/test/resources/algo1-programming_prob-2sum.txt"
 		twoSum.readFromFile(filename)
 		int distincts = twoSum.distinctSums(-10000, 10000)
 		println("Distincts: $distincts")

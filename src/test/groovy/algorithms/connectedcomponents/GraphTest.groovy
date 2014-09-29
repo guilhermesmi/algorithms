@@ -18,7 +18,7 @@ public class GraphTest {
 
 	@Test
 	public void "should read scc-test-case-1 containing directed graph"(){
-		String filename = "resources/scc-test-case-1.txt"
+		String filename = "src/test/resources/scc-test-case-1.txt"
 		graph.readFromFile(filename)
 		assertEquals(9,graph.vertices.size())
 		assertEquals(11,graph.totalEdges())
@@ -27,7 +27,7 @@ public class GraphTest {
 	
 	@Test
 	public void "should read scc-forum-test-case-1 containing directed graph"(){
-		String filename = "resources/scc-forum-test-case-1.txt"
+		String filename = "src/test/resources/scc-forum-test-case-1.txt"
 		graph.readFromFile(filename)
 //		assertEquals(8,graph.vertices.size())
 //		assertEquals(9,graph.totalEdges())
@@ -43,7 +43,7 @@ public class GraphTest {
 		
 	@Test
 	public void "should calculate the strongest connected components of a big directed graph"(){
-		String filename = "resources/SCC.txt"
+		String filename = "src/test/resources/SCC.txt"
 		println ("Reading file $filename...")
 		graph.readFromFile(filename)
 		assertEquals(875714,graph.vertices.size())
@@ -65,7 +65,7 @@ public class GraphTest {
 	
 	@Test
 	public void "should calculate the shortest path from vertex 1 to some vetices"(){
-		String filename = "resources/dijkstraData.txt"
+		String filename = "src/test/resources/dijkstraData.txt"
 		println ("Reading file $filename...")
 		graph.readWeightedGraph(filename)
 		assertEquals(200,graph.vertices.size())
