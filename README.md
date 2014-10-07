@@ -29,7 +29,8 @@ To use it, clone it and:
 
 1. Import to eclipse
 	* $ gradle eclipse
-And then go to eclipse and import it.
+
+	And then go to eclipse and import it.
 
 2. Build it:
 	* $ gradle build
