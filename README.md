@@ -28,20 +28,18 @@ How to use:
 To use it, clone it and:
 
 1. Import to eclipse
-* $ gradle eclipse
+	* $ gradle eclipse
 And then go to eclipse and import it.
 
 2. Build it:
-* $ gradle build
+	* $ gradle build
 	
 That will build a jar, running all the tests. 
 A few tests are ignored since they take a long time to run (minutes/hours), since they load large graphs and run some algorithms on it.
 You can just remove the @Ignore annotation from Spock.
 
 I advise you to increase your JVM configuration if you wanna run those tests, by:
-
-In your gradle file under gradle/bin, change to:
-
+In your gradle file under gradle/bin, change this line to:
 DEFAULT_JVM_OPTS="-Xmx1024m -Xss100m"
  
 Credit
