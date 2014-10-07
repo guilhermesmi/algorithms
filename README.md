@@ -7,15 +7,15 @@ Algorithms that I have implemented during the session of Algorithms Design and A
 Contents
 ---------
 
-*Sorting
-	*Quicksort - With some pivot strategies (first element, medium, medium of three).
-	*Mergesort
-*Heap array based. And HeapSort implemented for free.
-*LinkedList single forward
-*BinarySearchTree
-*LucasSeries (like a fibonacci, implemented with memoization, runs really fast).
-*Min Cut of a graph
-*Connected Components (with Dijkstra and Kosaraju implementations)
+* Sorting
+	* Quicksort - With some pivot strategies (first element, medium, medium of three).
+	* Mergesort
+* Heap array based. And HeapSort implemented for free.
+* LinkedList single forward
+* BinarySearchTree
+* LucasSeries (like a fibonacci, implemented with memoization, runs really fast).
+* Min Cut of a graph
+* Connected Components (with Dijkstra and Kosaraju implementations)
 
 
 All algorithms are implemented using Groovy, which I'm mostly learning and enjoying. 
