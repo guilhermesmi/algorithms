@@ -36,7 +36,7 @@ To use it, clone it and:
 	* $ gradle build
 	
 That will build a jar, running all the tests. 
-A few tests are ignored since they take a long time to run (minutes/hours), since they load large graphs and run some algorithms on it.
+A few tests are ignored since they take a long time to run (minutes/hours), they load large graphs.
 You can just remove the @Ignore annotation from Spock.
 
 I advise you to increase your JVM configuration if you wanna run those tests, by:
