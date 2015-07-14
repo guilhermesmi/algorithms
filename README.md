@@ -4,6 +4,7 @@ Algorithms
 Algorithms that I have implemented during the session of Algorithms Design and Analisys from Coursera. Also there are other stuff implemented just for fun. The code is covered by tests, some written in Spock and some still in JUnit, although I'm rewriting them. ![Build Status](https://travis-ci.org/guilhermesmi/algorithms.svg?branch=master)
 
 
+
 Contents
 ---------
 
