@@ -1,4 +1,4 @@
-package algorithms;
+package algorithms.series
 
 import spock.lang.Specification
 import spock.lang.Unroll
