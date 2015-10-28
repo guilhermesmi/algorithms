@@ -3,9 +3,7 @@ package algorithms
 import spock.lang.Specification
 
 class DoubleConverterSpecification extends Specification{
-
-    Closu
-
+    
 	DoubleConverter converter;
 
 	def setup(){
