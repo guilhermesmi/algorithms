@@ -2,7 +2,7 @@ package algorithms
 
 class DoubleConverter {
 
-	public Map convert(Map map){
+    public Map convert(Map map) {
         Stack<Map> stack = new Stack<>();
         stack.push(map)
         while (!stack.isEmpty()) {
@@ -16,5 +16,5 @@ class DoubleConverter {
             }
         }
         map
-	}
+    }
 }
