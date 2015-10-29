@@ -17,6 +17,7 @@ class DoubleConverterSpecification extends Specification {
         Map converted = converter.convert(deepMap)
         then:
         converted == ["1": new Double(1), "2": "2"]
+        converted["1"].getClass() == Double.class // cause spock will compare by value not by its type
     }
 
     def "should convert a 2 level deep map"() {
@@ -26,6 +27,8 @@ class DoubleConverterSpecification extends Specification {
         Map converted = converter.convert(deepMap)
         then:
         converted == ["1": new Double(1), "2": "2", "3": ["3.1": new Double(3.1)]]
+        converted["1"].getClass() == Double.class // cause spock will compare by value not by its type
+        converted["3"]["3.1"].getClass() == Double.class
     }
 
     def "should convert a 3 level deep map"() {
@@ -35,5 +38,8 @@ class DoubleConverterSpecification extends Specification {
         Map converted = converter.convert(deepMap)
         then:
         converted == ["1": new Double(1), "2": "2", "3": ["3.1": new Double(3.1), "3.2": ["3.2.1": new Double(3.21)]]]
+        converted["1"].getClass() == Double.class // cause spock will compare by value not by its type
+        converted["3"]["3.1"].getClass() == Double.class
+        converted["3"]["3.2"]["3.2.1"].getClass() == Double.class
     }
 }
